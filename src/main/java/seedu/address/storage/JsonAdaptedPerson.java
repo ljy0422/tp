@@ -25,9 +25,9 @@ class JsonAdaptedPerson {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
-    private String name;
-    private String id;
-    private String phone;
+    private final String name;
+    private final String id;
+    private final String phone;
     private final String email;
     private final String address;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
@@ -74,14 +74,9 @@ class JsonAdaptedPerson {
      * Converts a given {@code Person} into this class for Jackson use.
      */
     public JsonAdaptedPerson(Person source) {
-        String nameBeforeEncryption = source.getName().fullName;
-        String hpBeforeEncryption = source.getPhone().value;
-        //email = source.getEmail().value;
-        //address = source.getAddress().value;
+        name = source.getName().fullName;
+        phone = source.getPhone().value;
         id = source.getId().value;
-        tags.addAll(source.getTags().stream()
-               .map(JsonAdaptedTag::new)
-               .collect(Collectors.toList()));
         email = "test";
         address = "test";
 
@@ -116,22 +111,6 @@ class JsonAdaptedPerson {
         }
         final Phone modelPhone = new Phone(phone);
 
-        //if (email == null) {
-        //    throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
-        //}
-        //if (!Email.isValidEmail(email)) {
-        //    throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
-        //}
-        //final Email modelEmail = new Email(email);
-
-        //if (address == null) {
-        //    throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-        //    Address.class.getSimpleName()));
-        //}
-        //if (!Address.isValidAddress(address)) {
-        //    throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
-        //}
-        //final Address modelAddress = new Address(address);
 
         if (id == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Id.class.getSimpleName()));
