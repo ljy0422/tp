@@ -82,17 +82,6 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                .map(JsonAdaptedTag::new)
                .collect(Collectors.toList()));
-        String idBeforeExcryption = id;
-        try {
-            String encryptedName = FixedAesUtil.encrypt(nameBeforeEncryption);
-            String encryptedPhone = FixedAesUtil.encrypt(hpBeforeEncryption);
-            String encryptedId = FixedAesUtil.encrypt(idBeforeExcryption);
-            this.name = encryptedName;
-            this.phone = encryptedPhone;
-            this.id = encryptedId;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         email = "test";
         address = "test";
 
@@ -113,33 +102,19 @@ class JsonAdaptedPerson {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
         }
 
-        String decryptedName = "";
-        try {
-            decryptedName = FixedAesUtil.decrypt(name);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if (!Name.isValidName(decryptedName)) {
+        if (!Name.isValidName(name)) {
             throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
-        final Name modelName = new Name(decryptedName);
+        final Name modelName = new Name(name);
 
         if (phone == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
         }
 
-        String decryptedPhone = "";
-        try {
-            decryptedPhone = FixedAesUtil.decrypt(phone);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if (!Phone.isValidPhone(decryptedPhone)) {
+        if (!Phone.isValidPhone(phone)) {
             throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
         }
-        final Phone modelPhone = new Phone(decryptedPhone);
+        final Phone modelPhone = new Phone(phone);
 
         //if (email == null) {
         //    throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
@@ -162,17 +137,10 @@ class JsonAdaptedPerson {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Id.class.getSimpleName()));
         }
 
-        String decryptedId = "";
-        try {
-            decryptedId = FixedAesUtil.decrypt(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if (!Id.isValidId(decryptedId)) {
+        if (!Id.isValidId(id)) {
             throw new IllegalValueException(Id.MESSAGE_CONSTRAINTS);
         }
-        final Id modelId = new Id(decryptedId);
+        final Id modelId = new Id(id);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
