@@ -10,6 +10,7 @@
 <page-nav-print />
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always; visibility: hidden"> \pagebreak </div>
 
 ## **Acknowledgements**
 
@@ -132,6 +133,8 @@ The `Model` component,
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
+<div style="page-break-after: always; visibility: hidden"> \pagebreak </div>
+
 ### Storage component
 
 **API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
@@ -148,6 +151,8 @@ The `Storage` component,
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always; visibility: hidden"> \pagebreak </div>
+
 
 ## **Implementation**
 
@@ -270,6 +275,8 @@ Currently data is being archived via storing it locally as a `.json` file. Our a
 
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always; visibility: hidden"> \pagebreak </div>
+
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
@@ -668,6 +675,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Sensitive information**: Important information relating to a person that may cause privacy concerns such as ID details or bank account details.
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always; visibility: hidden"> \pagebreak </div>
 
 ## **Appendix: Instructions for manual testing**
 
@@ -978,6 +986,8 @@ For manual testing of other commands, run the following commands to add the spec
    1. Test case: `@ /filename data`
       Expected: File with the name `data.csv` should appear in the same directory of the application, containing all of the contacts stored in the app (which can be seen with `ls -a`).
 
+<div style="page-break-after: always; visibility: hidden"> \pagebreak </div>
+
 ## **Appendix: Effort**
 
 ### Difficulty Level 
@@ -1062,6 +1072,7 @@ In developing Hi:Re, we are proud to have done the following given the constrain
   3) For most of the commands that AB3 had and we kept, we upgraded them to fit our new functionality.
      In the process, `Command` and `Parser` files were used as reference for new features that we implemented.
 
+<div style="page-break-after: always; visibility: hidden"> \pagebreak </div>
 
 ## **Appendix: Planned Enhancements**
 
