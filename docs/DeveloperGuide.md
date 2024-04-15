@@ -234,13 +234,40 @@ Compared with the recommended way that stores the entire address book for each u
 * Dependency and State Consistency: Commands must be designed not to rely excessively on the specific state of the application that may be altered by other commands. Ensuring consistency and managing dependencies between commands can be challenging.
 
 * Recovery from Errors: If an error occurs during the execution of an undo or redo operation, recovering and ensuring data integrity can be more complex, as the system must handle partial undos or redos gracefully.
-### \[Proposed\] Data archiving
+### \[Implemented\] Data archiving
 
-_{Explain here how the data archiving feature will be implemented}_
+Currently data is being archived via storing it locally as a `.json` file. Our application supports exporting data to a CSV file, offering a convenient way to handle data outside the application. <br><br>
 
-Currently data is being archived via storing it locally as a `.json` file.
+**Core Components**
+1. `ExportCommand`: This class handles the logic for the export operation. It checks if the file exists to prevent overwriting and throws an exception if the file already exists. It also handles the creation of the CSV file by delegating to the storage class.
 
-In the future, we are looking to create functions to export the data into different file formats such as `.xlsx`, `.pdf` or `.txt` files.
+2. `JsonCsvAddressBookStorage`: This class extends the storage capabilities to support CSV format. It handles reading from and saving to JSON and CSV formats. It uses utility functions to convert JSON data directly into CSV format.
+
+3. `JsonUtil`: This utility class provides methods to read from and write to JSON files, and includes functionality to convert JSON data to CSV format.
+
+**Functionalities**
+1. Executing the Command:
+   * The command checks if the target file already exists to avoid accidental overwriting. If the file exists, it throws an exception.
+   * If the file does not exist, it initializes a new JsonCsvAddressBookStorage with the target file path.
+   * It then calls the save method to write the address book data to a CSV file at the specified location.<br><br>
+
+2. Handling file operations:
+   * The utility functions in JsonUtil handle the conversion of data formats and manage file I/O operations, ensuring data integrity during the read/write process.
+   
+**Design considerations:**
+
+**Pros:**
+
+* User Convenience: Allows users to export their data easily, making data portable and usable in other applications like spreadsheets.
+* Data Integrity: By checking for file existence before performing operations, the feature prevents data loss from accidental overwrites.
+* Extensibility: The use of a dedicated storage class for handling CSV operations keeps the command class focused on command logic, promoting cleaner code separation and making it easier to extend or modify file handling operations in the future.
+
+**Cons:**
+
+* Error Handling Complexity: Managing file-related errors (e.g., file access permissions, disk space issues) requires robust exception handling that might complicate the command execution flow.
+* Dependency on File System: As operations depend on file I/O, the feature's reliability is contingent upon the underlying file system, which can introduce issues not directly related to the application's logic (e.g., file system availability, network issues for network-mounted storage).
+* Testing Overhead: The need to mock file I/O operations in unit tests increases the complexity of testing this feature, requiring comprehensive mocks and potentially complex setup procedures for tests.
+
 
 --------------------------------------------------------------------------------------------------------------------
 
